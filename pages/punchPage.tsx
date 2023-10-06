@@ -12,11 +12,16 @@ const PunchPage: NextPage = () => {
   const [onDuty, setOnDuty] = useState(false);
   const [clockInTime, setClockInTime] = useState(DefaultTimeString);
   const [clockOutTime, setClockOutTime] = useState(DefaultTimeString);
+  const [locationEable, setLocationEnalbe] = useState(true);
+
   const punch = () => {
-    if (onDuty) setClockOutTime(getCurrentTimeString());
-    else {
+    if (onDuty) {
+      setClockOutTime(getCurrentTimeString());
+      setLocationEnalbe(true);
+    } else {
       setClockInTime(getCurrentTimeString());
       setClockOutTime(DefaultTimeString);
+      setLocationEnalbe(false);
     }
 
     setOnDuty(!onDuty);
@@ -34,7 +39,7 @@ const PunchPage: NextPage = () => {
         <TimeCard title="Out" content={clockOutTime} />
       </div>
       <div className={styles.footer}>
-        <LocationSelection />
+        <LocationSelection locationEanble={locationEable} />
       </div>
     </div>
   );
