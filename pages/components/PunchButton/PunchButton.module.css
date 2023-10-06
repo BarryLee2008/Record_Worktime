@@ -14,6 +14,7 @@
 .button:active {
   animation-name: btn-animation;
   animation-duration: 1.5s;
+  background-color: #559099;
 }
 
 @keyframes btn-animation {

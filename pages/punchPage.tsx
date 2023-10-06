@@ -5,26 +5,34 @@ import LocationSelection from "./components/LocationSelection";
 import { NextPage } from "next";
 import styles from "../styles/PunchPage.module.css";
 import getCurrentTimeString from "./utils/getCurrentTimeString";
+import { Spin } from 'antd';
 
-const DefaultTimeString: string = "00:00:00";
+const DefaultTimeString: string = '00:00:00';
+const ON_DUTY = 1;
+const OFF_DUTY = 2;
+const WAITTING = 3;
 
 const PunchPage: NextPage = () => {
-  const [onDuty, setOnDuty] = useState(false);
+  const [dutyState, setDutyState] = useState(OFF_DUTY);
   const [clockInTime, setClockInTime] = useState(DefaultTimeString);
   const [clockOutTime, setClockOutTime] = useState(DefaultTimeString);
   const [locationEable, setLocationEnalbe] = useState(true);
 
-  const punch = () => {
-    if (onDuty) {
+  const changeDutyState = () => {
+    if (dutyState === ON_DUTY) {
       setClockOutTime(getCurrentTimeString());
       setLocationEnalbe(true);
+      setDutyState(WAITTING);
     } else {
       setClockInTime(getCurrentTimeString());
       setClockOutTime(DefaultTimeString);
       setLocationEnalbe(false);
+      setDutyState(ON_DUTY);
     }
+  };
 
-    setOnDuty(!onDuty);
+  const punch = () => {
+    changeDutyState();
   };
 
   return (
@@ -34,8 +42,13 @@ const PunchPage: NextPage = () => {
       </div>
       <div className={styles.content}>
         <TimeCard title="In" content={clockInTime} />
-        {!onDuty && <div className={styles.offLabel}> Off Duty</div>}
-        {onDuty && <div className={styles.onLabel}> On Duty</div>}
+        {dutyState === OFF_DUTY && (
+          <div className={styles.offLabel}> Off Duty</div>
+        )}
+        {dutyState === ON_DUTY && (
+          <div className={styles.onLabel}> On Duty</div>
+        )}
+        {dutyState === WAITTING && <Spin size="large" />}
         <TimeCard title="Out" content={clockOutTime} />
       </div>
       <div className={styles.footer}>

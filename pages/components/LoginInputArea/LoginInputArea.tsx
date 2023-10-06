@@ -7,7 +7,7 @@ type FieldType = {
   password?: string;
 };
 
-const LoginInputArea: React.FC<{onLogin: Function}> = ({onLogin}) => {
+const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}> = ({onLogin, disable}) => {
   
   const onFinish = (values: FieldType) => {
     console.log("Success:", values);
@@ -24,6 +24,7 @@ const LoginInputArea: React.FC<{onLogin: Function}> = ({onLogin}) => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
+      disabled = {disable}
     >
       <Form.Item<FieldType>
         label="Email"

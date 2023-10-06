@@ -8,8 +8,7 @@ const PunchButton: React.FC<{ callback: Function }> = ({ callback }) => {
     callback();
   };
 
-  const [currentTime, setCurrentTime] = useState("00:00:00");
-  const [onDuty, setOnDuty] = useState(false);
+  const [currentTime, setCurrentTime] = useState('00:00:00');
 
   setInterval(() => {
     const currentTimeString = getCurrentTimeString();
