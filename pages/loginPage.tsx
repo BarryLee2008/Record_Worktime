@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/LoginPage.module.css';
 import LoginInputArea from './components/LoginInputArea';
-import login from './services/login';
+import login from '../services/login';
 import { useRouter } from 'next/router';
 
 type LoginCredential = {
