@@ -1,0 +1,25 @@
+.layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2vh;
+}
+
+.inputArea div {
+  margin-right: 2vw;
+}
+
+.button {
+  border-radius: 20rem;
+  width: 15rem;
+  height: 3rem;
+  background-color: #0000ff;
+}
