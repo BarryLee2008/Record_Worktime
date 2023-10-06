@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import type { RadioChangeEvent } from "antd";
-import { Radio } from "antd";
+import { Radio, Space } from "antd";
 
 const locationOptions = [
-  { label: "Burnaby", value: "Burnaby" },
-  { label: "Downtown Vancourve", value: "Downtown Vancourve" },
-  { label: "Surrey", value: "Surrey" },
-  { label: "South Vancouver", value: "South Vancouver" },
-  { label: "Coquitlam", value: "Coquitlam" },
-  { label: "Richmond", value: "Richmond" },
-  { label: "Outside", value: "Outside" },
+  { label: "Burnaby", value: "Burnaby", column: 1 },
+  { label: "Downtown Vancourve", value: "Downtown Vancourve", column: 1 },
+  { label: "Surrey", value: "Surrey", column: 1 },
+  { label: "South Vancouver", value: "South Vancouver", column: 2 },
+  { label: "Coquitlam", value: "Coquitlam", column: 2 },
+  { label: "Richmond", value: "Richmond", column: 2 },
+  { label: "Outside", value: "Outside", column: 2 },
 ];
 
 const LocationSelection: React.FC = () => {
@@ -21,13 +21,33 @@ const LocationSelection: React.FC = () => {
   return (
     <>
       <Radio.Group
-        options={locationOptions}
         onChange={onLocationChange}
         value={location}
         optionType="button"
         buttonStyle="solid"
         size="large"
-      />
+      >
+        <Space direction="vertical">
+          {locationOptions.map(
+            (o) =>
+              o.column === 1 && (
+                <Radio key={o.value} value={o.value}>
+                  {o.label}
+                </Radio>
+              )
+          )}
+        </Space>
+        <Space direction="vertical">
+          {locationOptions.map(
+            (o) =>
+              o.column === 2 && (
+                <Radio key={o.value} value={o.value}>
+                  {o.label}
+                </Radio>
+              )
+          )}
+        </Space>
+      </Radio.Group>
     </>
   );
 };

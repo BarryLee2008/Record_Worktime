@@ -31,3 +31,6 @@
 .footer {
   flex: 1;
 }
+.errorLabel {
+  color: red;
+}
