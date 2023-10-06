@@ -1,0 +1,29 @@
+.layout {
+  border-radius: 50vw;
+}
+
+.button {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50vw;
+  border: 0;
+  font-size: 5vw;
+  background-color: #66c4ff;
+}
+
+.button:active {
+  animation-name: btn-animation;
+  animation-duration: 1.5s;
+}
+
+@keyframes btn-animation {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(2);
+    opacity: 0.8;
+  }
+}
