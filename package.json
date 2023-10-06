@@ -9,15 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.9.4",
+    "axios": "^1.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.1",
     "next": "13.5.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "20.8.2",
     "@types/react": "18.2.25",
     "@types/react-dom": "18.2.10",
-    "eslint": "8.50.0",
+    "eslint": "^8.50.0",
     "eslint-config-next": "13.5.4",
     "typescript": "5.2.2"
   }
