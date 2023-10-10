@@ -6,15 +6,15 @@ export class Task{
     id?:number
 
     @Column()
-    start_time?:Date
+    start_time?:string
 
     @Column()
-    end_time?:Date
+    end_time?:string
 
     @Column()
     location?:string
 
-    @Column()
+    @Column({type:'float'})
     total_worktime?:number
 
     @ManyToOne(()=>User,(user)=>user.tasks,{
