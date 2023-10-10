@@ -4,7 +4,8 @@ import { Task, User } from 'db/entities'
 import { verifyJWT } from 'util/jwt'
 
 const getUserWorktime =async (req:NextApiRequest, res:NextApiResponse) => {
-    const token = req.body?.token
+    let token = req.headers.authorization
+    token = token?.split('Bearer ')[1] || ''
     let userInfo = null
     console.log(token)
     try {
