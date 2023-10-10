@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import styles from "./PunchButton.module.css";
 import getCurrentTimeString from "../../utils/getCurrentTimeString";
 
-const PunchButton: React.FC<{ callback: Function }> = ({ callback }) => {
+const PunchButton: React.FC<{ enable: boolean, callback: Function }> = ({
+  enable,
+  callback,
+}) => {
   const onClick = () => {
-    console.log("Punch Clock");
+    console.log('Punch Clock');
     callback();
   };
 
@@ -22,6 +25,7 @@ const PunchButton: React.FC<{ callback: Function }> = ({ callback }) => {
         className={styles.button}
         onClick={onClick}
         value={currentTime}
+        disabled={!enable}
       />
     </div>
   );

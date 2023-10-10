@@ -1,0 +1,26 @@
+.layout {
+  display: flex;
+  height: 5rem;
+  position: fixed;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #ccc;
+  z-index: 1000;
+  top: 0;
+  align-items: center;
+}
+
+.navItem {
+  flex: 1;
+  text-align: center;
+  height: 100%;
+  line-height: 5rem;
+}
+
+.navItem:hover {
+  cursor: pointer;
+}
+
+.navItem+.navItem {
+  border-left: 1px solid gray;
+}
