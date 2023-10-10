@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import AppDataSource from 'db/data-source';
 import { Task, User } from 'db/entities/index';
+import { App } from 'antd';
 const totalWorktime = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!AppDataSource.isInitialized) {
     await AppDataSource.initialize();
@@ -14,11 +15,19 @@ const totalWorktime = async (req: NextApiRequest, res: NextApiResponse) => {
       tasks: true,
     },
   });
-  console.log(response);
+  const currentTask = await AppDataSource.getRepository(Task).findOne({
+    where: {
+      id: 50,
+    },
+    relations: {
+      user: true,
+    },
+  });
+  console.log(currentTask);
 
   res.status(200).json({
     message: 'Ok',
-    data: response,
+    data: currentTask,
   });
 };
 

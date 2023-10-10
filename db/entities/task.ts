@@ -17,6 +17,9 @@ export class Task{
     @Column({type:'float'})
     total_worktime?:number
 
+    @Column()
+    timer_id?:number
+
     @ManyToOne(()=>User,(user)=>user.tasks,{
         cascade:true
     })

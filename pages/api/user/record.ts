@@ -4,7 +4,6 @@ import {Task,User} from 'db/entities/index'
 import {verifyJWT} from 'util/jwt'
 import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
-
 const record = async (req: NextApiRequest, res: NextApiResponse) => {
   // post start work
 
@@ -87,21 +86,20 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
    newTask.user = currentUser
    newTask.start_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
    newTask.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
-   
+   newTask.timer_id = 0
    newTask.total_worktime = 0.0
    newTask.user.status = 1
    newTask.location = location
    try {
-    const response = await taskRepo.manager.save(newTask)
-   
+    let response = await taskRepo.manager.save(newTask)
     res.status(200).json({
       message: 'time to work',
       data:{
         taskID:response?.id,
         start_time:response.start_time,
         location:response.location,
-        status:response.user?.status
-      }
+        status:response.user?.status,
+      } 
 
     });
    } catch (error:any) {
@@ -119,7 +117,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'taskID is required'
       })
     }
-    
+
     const currentUser = await userRepo.findOne({
       where:{
         id:userID
@@ -128,6 +126,8 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         tasks:true
       }
     })
+    console.log(currentUser?.id)
+   
     if(!currentUser){
       return res.status(403).json({
         message:'The user does not exist'
@@ -146,6 +146,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         user:true
       }
     })
+    //console.log(currentTask)
     if(!currentTask){
       return res.status(401).json({
         message:'The task does not exist, the user might not start work'
@@ -173,6 +174,8 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
 
      // console.log(currentTask)
      const response =  await taskRepo.manager.save(currentTask)
+     console.log(response.timer_id)
+     clearTimeout(response.timer_id)
      res.status(200).json({
       message: 'time to rest',
       data:{
