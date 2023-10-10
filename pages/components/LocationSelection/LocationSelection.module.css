@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radioButton {
+  width: 200px;
+}
+
+@media only screen and (max-width: 500px) {
+  .radioButton {
+    width: 45vw;
+  }
+}

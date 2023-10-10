@@ -47,7 +47,7 @@ const login = async (req:NextApiRequest,res:NextApiResponse) => {
             })
         }
     } else if(!user){
-        return res.status(200).json({
+        return res.status(401).json({
             message:'the password and username are not matched'
         })
     }
