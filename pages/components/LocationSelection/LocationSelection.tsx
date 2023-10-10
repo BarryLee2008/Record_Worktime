@@ -2,23 +2,16 @@ import React, { useState } from "react";
 import type { RadioChangeEvent } from "antd";
 import { Radio, Space } from "antd";
 import styles from './LocationSelection.module.css';
+import { locationOptions } from 'pages/utils/data';
 
-const locationOptions = [
-  { label: 'Burnaby', value: 'Burnaby', column: 1 },
-  { label: 'Downtown', value: 'Downtown Vancourve', column: 1 },
-  { label: 'Surrey', value: 'Surrey', column: 1 },
-  { label: 'South Vancouver', value: 'South Vancouver', column: 2 },
-  { label: 'Coquitlam', value: 'Coquitlam', column: 2 },
-  { label: 'Richmond', value: 'Richmond', column: 2 },
-  { label: 'Outside', value: 'Outside', column: 2 },
-];
-
-const LocationSelection: React.FC<{ locationEanble: Boolean }> = ({
-  locationEanble,
-}) => {
-  const [location, setLocation] = useState('Richmond');
+const LocationSelection: React.FC<{
+  locationEanble: Boolean,
+  callback: Function | undefined,
+}> = ({ locationEanble, callback }) => {
+  const [location, setLocation] = useState(locationOptions[0].value);
   const onLocationChange = ({ target: { value } }: RadioChangeEvent) => {
     setLocation(value);
+    callback && callback(value);
   };
 
   return (

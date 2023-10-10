@@ -6,6 +6,8 @@ import {verifyJWT} from 'util/jwt'
 
 const record = async (req: NextApiRequest, res: NextApiResponse) => {
   // post start work
+  const date = new Date();
+  console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'}));
 
   // put end work
 
@@ -16,7 +18,9 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'the request missed jwt token'
     })
   } else{
+    console.log(token);
     token = token.split('Bearer ')[1]
+    
     try {
         const decode =  await verifyJWT(token)
         userInfo = decode

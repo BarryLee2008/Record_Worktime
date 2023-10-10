@@ -34,3 +34,58 @@
 .errorLabel {
   color: red;
 }
+#water {
+  position: absolute;
+  top: 10px;
+  width: 200px;
+  height: 200px;
+  border-radius: 45% 55% 57% 43% / 48% 48% 52% 52%;
+  box-shadow: 10px 20px 30px rgba(0, 0, 0, .5) inset,
+    10px 10px 20px rgba(0, 0, 0, .3),
+    15px 15px 30px rgba(0, 0, 0, .05),
+    -10px -10px 15px rgba(255, 255, 255, .8) inset;
+  animation: action 3s linear infinite;
+}
+
+#water::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 40px;
+  left: 28%;
+  border-radius: 37% 63% 43% 57% / 22% 39% 61% 78%;
+  background-color: rgba(255, 255, 255, .7);
+  animation: action 3s linear infinite;
+}
+
+#water::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 80px;
+  left: 40%;
+  border-radius: 65% 35% 50% 50% / 58% 66% 34% 42%;
+  background-color: rgba(255, 255, 255, .7);
+  animation: action 3s linear infinite;
+}
+
+/* 定义动画 */
+@keyframes action {
+  25% {
+    border-radius: 68% 32% 58% 42% / 15% 88% 12% 85%;
+  }
+
+  50% {
+    border-radius: 77% 23% 46% 54% / 33% 63% 37% 67%;
+  }
+
+  70% {
+    border-radius: 49% 51% 63% 37% / 41% 73% 27% 59%;
+  }
+
+  100% {
+    border-radius: 45% 55% 59% 41% / 48% 87% 13% 52%;
+  }
+}

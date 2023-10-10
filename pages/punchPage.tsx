@@ -6,6 +6,9 @@ import { NextPage } from "next";
 import styles from "../styles/PunchPage.module.css";
 import getCurrentTimeString from "./utils/getCurrentTimeString";
 import { Spin } from 'antd';
+import punchClockIn from 'services/punchClockIn';
+import { locationOptions } from './utils/data';
+import getDateTimeVal from './utils/getDateTimeVal';
 
 const DefaultTimeString: string = '00:00:00';
 const ON_DUTY = 1;
@@ -17,6 +20,7 @@ const PunchPage: NextPage = () => {
   const [clockInTime, setClockInTime] = useState(DefaultTimeString);
   const [clockOutTime, setClockOutTime] = useState(DefaultTimeString);
   const [locationEable, setLocationEnalbe] = useState(true);
+  const [location, setLocation] = useState(locationOptions[0].value);
 
   const changeDutyState = () => {
     if (dutyState === ON_DUTY) {
@@ -32,7 +36,11 @@ const PunchPage: NextPage = () => {
   };
 
   const punch = () => {
-    changeDutyState();
+    const datetimeVal = getDateTimeVal('2023-05-23T12:45:12.0020');
+    console.log(datetimeVal);
+    if (dutyState === OFF_DUTY)
+      punchClockIn({ location }).then(() => changeDutyState());
+    else if (dutyState === ON_DUTY) changeDutyState();
   };
 
   return (
@@ -52,7 +60,10 @@ const PunchPage: NextPage = () => {
         <TimeCard title="Out" content={clockOutTime} />
       </div>
       <div className={styles.footer}>
-        <LocationSelection locationEanble={locationEable} />
+        <LocationSelection
+          locationEanble={locationEable}
+          callback={setLocation}
+        />
       </div>
     </div>
   );
