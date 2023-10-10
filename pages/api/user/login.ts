@@ -18,7 +18,7 @@ const login = async (req:NextApiRequest,res:NextApiResponse) => {
            await AppDataSource.initialize()
         }
     } catch (error:any) {
-       return res.status(200).json({
+       return res.status(500).json({
             message:error?.message || 'Failed to initialize the AppDataSource'
         })
     }
@@ -33,7 +33,7 @@ const login = async (req:NextApiRequest,res:NextApiResponse) => {
             user:true
         }
     })
-    console.log(user)
+    // console.log(user)
     if(user){
         try {
           const token =  await createJWT(user) 
