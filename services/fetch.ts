@@ -22,9 +22,10 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (config) => {
     const authToken = config.data.token;
+    console.log(config)
     if (authToken) {
-      const jwtToken = authToken.substring(7);
-      localStorage.setItem("token", jwtToken);
+      console.log(authToken);
+      localStorage.setItem("token", authToken);
       //getAuth({ token: jwtToken });
     }
     return config;

@@ -5,7 +5,7 @@ type LoginCredential = {
   password?: string,
 };
 
-const login = (credentials: LoginCredential) =>
+const login = async (credentials: LoginCredential) =>
   fetch
     .post('/api/user/login', credentials)
     .then((response) => response.status)
