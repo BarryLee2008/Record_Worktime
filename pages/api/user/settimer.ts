@@ -20,7 +20,7 @@ const autoCheck = async (req:NextApiRequest, res:NextApiResponse) => {
             message:'The task has been set up a timer'
         })
     }
-    currentTask!.timer_id = Number(setTimeout(setTimer, 1000*60*3,currentTask?.id))
+    currentTask!.timer_id = Number(setTimeout(setTimer, 1000*60*60*16,currentTask?.id))
     
     const response = await taskRepo.manager.save(currentTask)
     console.log(response)

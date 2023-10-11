@@ -27,8 +27,9 @@ const setTimer = async (taskID: number | undefined) => {
     response!.end_time = format(new Date(end_time),'yyyy-MM-dd HH:mm:ss')
     response.total_worktime = 16
     response.user!.status = 0
-    await taskRepo.manager.save(response)
-    //console.log('I am here')
+    const newresponse = await taskRepo.manager.save(response)
+    console.log('I am here')
+    console.log(newresponse)
   }
 
  

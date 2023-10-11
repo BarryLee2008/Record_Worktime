@@ -6,8 +6,8 @@ import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
 const record = async (req: NextApiRequest, res: NextApiResponse) => {
   // post start work
-  const date = new Date();
-  console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'}));
+  /* const date = new Date();
+  console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'})); */
 
   // put end work
 
@@ -19,7 +19,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'the request missed jwt token'
     })
   } else{
-    console.log(token);
+   // console.log(token);
     token = token.split('Bearer ')[1]
     
     try {
@@ -130,7 +130,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         tasks:true
       }
     })
-    console.log(currentUser?.id)
+   // console.log(currentUser?.id)
    
     if(!currentUser){
       return res.status(403).json({
@@ -166,7 +166,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
     if(currentTask?.start_time){
       let total_worktime_string = formatDistance(new Date(currentTask.start_time),new Date(currentTask.end_time))
       
-      console.log(total_worktime_string)
+     // console.log(total_worktime_string)
       let total_worktime_arr = total_worktime_string.split(' ') 
       if(total_worktime_arr.length === 2){
         let total_worktime = (Number.parseInt(total_worktime_arr[0]))/60
@@ -178,7 +178,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
 
      // console.log(currentTask)
      const response =  await taskRepo.manager.save(currentTask)
-     console.log(response.timer_id)
+     // console.log(response.timer_id)
      clearTimeout(response.timer_id)
      res.status(200).json({
       message: 'time to rest',
