@@ -23,6 +23,7 @@ const SUCCESS = 200;
 const PunchPage: NextPage = () => {
   const [dutyState, setDutyState] = useState(OFF_DUTY);
   const [waitting, setWaitting] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [clockInTime, setClockInTime] = useState(DefaultTimeString);
   const [locationEable, setLocationEnalbe] = useState(true);
   const [location, setLocation] = useState(locationOptions[0].value);
@@ -33,14 +34,15 @@ const PunchPage: NextPage = () => {
     getAuth()
       .then((status) => {
         if (status === SUCCESS)
-          getUserWorkTime().then((data) => {
-            console.log(data);
-            if (data?.status === ON_DUTY) {
-              setDutyState(ON_DUTY);
-              setClockInTime(getTimeString(data.start_time));
-              setLocationEnalbe(false);
-            } else setClockInTime(DefaultTimeString);
-          });
+          getUserWorkTime()
+            .then((data) => {
+              if (data?.status === ON_DUTY) {
+                setDutyState(ON_DUTY);
+                setClockInTime(getTimeString(data.start_time));
+                setLocationEnalbe(false);
+              } else setClockInTime(DefaultTimeString);
+            })
+            .then(() => setPageLoading(false));
       })
       .catch(() => router.push('/'));
   }, [dutyState, router]);
@@ -75,27 +77,32 @@ const PunchPage: NextPage = () => {
   };
 
   return (
-    <div className={styles.layout}>
-      <Navigation />
-      <div className={styles.header}>
-        <PunchButton enable={clockEnable} callback={punch} />
-      </div>
-      <div className={styles.content}>
-        <TimeCard title="Work Starts At" content={clockInTime} />
-        {dutyState === OFF_DUTY && waitting === false && (
-          <div className={styles.offLabel}> Off Duty</div>
-        )}
-        {dutyState === ON_DUTY && waitting === false && (
-          <div className={styles.onLabel}> On Duty</div>
-        )}
-        {waitting && <Spin size="large" />}
-      </div>
-      <div className={styles.footer}>
-        <LocationSelection
-          locationEanble={locationEable}
-          callback={setLocation}
-        />
-      </div>
+    <div className={styles.wrapper}>
+      {pageLoading && <Spin size="large" />}
+      {pageLoading || (
+        <div className={styles.layout}>
+          <Navigation />
+          <div className={styles.header}>
+            <PunchButton enable={clockEnable} callback={punch} />
+          </div>
+          <div className={styles.content}>
+            <TimeCard title="Work Starts At" content={clockInTime} />
+            {dutyState === OFF_DUTY && waitting === false && (
+              <div className={styles.offLabel}> Off Duty</div>
+            )}
+            {dutyState === ON_DUTY && waitting === false && (
+              <div className={styles.onLabel}> On Duty</div>
+            )}
+            {waitting && <Spin size="large" />}
+          </div>
+          <div className={styles.footer}>
+            <LocationSelection
+              locationEanble={locationEable}
+              callback={setLocation}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

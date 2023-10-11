@@ -10,6 +10,9 @@ type LoginCredential = {
   password?: string,
 };
 
+const PUNCH_PAGE = '/punchPage';
+const ADMIN_PAGE = '/adminRecordPage';
+
 const LoginPage: React.FC = () => {
   const [logFailed, setLogFailed] = useState(false);
   const [onLoading, setOnLoading] = useState(false);
@@ -21,9 +24,8 @@ const LoginPage: React.FC = () => {
     setLogFailed(false);
     setOnLoading(true);
     login(credentials).then((res) => {
-      if (res === 200)
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        router.push('/punchPage');
+      if (res?.status === 200)
+        router.push(res?.data?.admin ? ADMIN_PAGE : PUNCH_PAGE);
       else {
         setLogFailed(true);
         setOnLoading(false);

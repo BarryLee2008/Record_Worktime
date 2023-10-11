@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, Tag } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Spin, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import Navigation from './components/Navigation/Navigation';
 import styles from '../styles/RecordPage.module.css';
@@ -65,17 +65,104 @@ const data: DataType[] = [
     location: 'Burnaby',
     workingHour: '8 Hours',
   },
+  {
+    key: '4',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '5',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '6',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '7',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '8',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '9',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '10',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '11',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '12',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
 ];
+
+for (let i = 13; i < 150; ++i) {
+  data.push({
+    key: i.toString(),
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  });
+}
 
 const RecordPage: React.FC = () => {
   const router = useRouter();
   getAuth().catch(() => router.push('/'));
 
+  const [loadingPage, setLoadingPage] = useState(true);
+  useEffect(() => setLoadingPage(false), []);
+
   return (
-    <>
-      <Navigation />
-      <Table className={styles.tableArea} columns={columns} dataSource={data} />
-    </>
+    <div className={styles.wrapper}>
+      {loadingPage && <Spin size="large" />}
+      {loadingPage || (
+        <div className={styles.layout}>
+          <Navigation />
+          <Table
+            className={styles.tableArea}
+            columns={columns}
+            dataSource={data}
+            pagination={{ pageSize: 10 }}
+            scroll={{ y: '70vh' }}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 
