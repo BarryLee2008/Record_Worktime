@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import fetch from './fetch';
 
 type AuthProps = {
@@ -10,12 +9,6 @@ const getAuth = async () => {
   const body: AuthProps = {
     token,
   };
-  return fetch
-    .post('/api/user/verifyjwt', body)
-    .then((res) => res.status)
-    .catch((err) => {
-      console.log(err);
-      useRouter().push('/');
-    });
+  return fetch.post('/api/user/verifyjwt', body).then((res) => res.status);
 };
 export default getAuth;

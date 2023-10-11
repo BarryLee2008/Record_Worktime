@@ -3,6 +3,8 @@ import { Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import Navigation from './components/Navigation/Navigation';
 import styles from '../styles/RecordPage.module.css';
+import { useRouter } from 'next/router';
+import getAuth from 'services/getAuth';
 
 interface DataType {
   key: string;
@@ -65,11 +67,16 @@ const data: DataType[] = [
   },
 ];
 
-const RecordPage: React.FC = () => (
-  <>
-    <Navigation />
-    <Table className={styles.tableArea} columns={columns} dataSource={data} />
-  </>
-);
+const RecordPage: React.FC = () => {
+  const router = useRouter();
+  getAuth().catch(() => router.push('/'));
+
+  return (
+    <>
+      <Navigation />
+      <Table className={styles.tableArea} columns={columns} dataSource={data} />
+    </>
+  );
+};
 
 export default RecordPage;

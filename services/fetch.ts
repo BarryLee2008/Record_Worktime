@@ -23,7 +23,7 @@ request.interceptors.response.use(
   (config) => {
     const authToken = config.data.token;
     if (authToken) {
-      console.log(authToken);
+      //console.log(authToken);
       localStorage.setItem("token", authToken);
       //getAuth({ token: jwtToken });
     }

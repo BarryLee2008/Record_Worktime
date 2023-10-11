@@ -21,7 +21,6 @@ const LoginPage: React.FC = () => {
     setLogFailed(false);
     setOnLoading(true);
     login(credentials).then((res) => {
-      console.log(res);
       if (res === 200)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         router.push('/punchPage');
