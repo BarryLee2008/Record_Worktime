@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import PunchButton from "./components/PunchButton";
-import TimeCard from "./components/TimeCard";
-import LocationSelection from "./components/LocationSelection";
-import { NextPage } from "next";
-import styles from "../styles/PunchPage.module.css";
-import getCurrentTimeString from "./utils/getCurrentTimeString";
+import React, { useEffect, useState } from 'react';
+import PunchButton from './components/PunchButton';
+import TimeCard from './components/TimeCard';
+import LocationSelection from './components/LocationSelection';
+import { NextPage } from 'next';
+import styles from '../styles/PunchPage.module.css';
+import getCurrentTimeString from './utils/getCurrentTimeString';
 import { Spin } from 'antd';
 import punchClockIn from 'services/punchClockIn';
 import { locationOptions } from './utils/data';
 import punchClockOut from 'services/punchCloukOut';
 import Navigation from './components/Navigation/Navigation';
+import getAuth from 'services/getAuth';
+import getUserWorkTime from 'services/getUserWorkTime';
+import getTimeString from './utils/getTimeString';
 
 const DefaultTimeString: string = '00:00:00';
 const ON_DUTY = 1;
-const OFF_DUTY = 2;
+const OFF_DUTY = 0;
 const CLOCK_BLOCK_TIME = 15000;
 const SUCCESS = 200;
 
@@ -25,6 +28,18 @@ const PunchPage: NextPage = () => {
   const [locationEable, setLocationEnalbe] = useState(true);
   const [location, setLocation] = useState(locationOptions[0].value);
   const [clockEnable, setClockEnable] = useState(true);
+
+  useEffect(() => {
+    getAuth().then((status) => {
+      if (status === SUCCESS)
+        getUserWorkTime().then((data) => {
+          if (data?.status === ON_DUTY) {
+            setDutyState(ON_DUTY);
+            setClockInTime(getTimeString(data.start_time));
+          }
+        });
+    });
+  }, [dutyState]);
 
   const changeDutyState = (status: number | void) => {
     if (status !== SUCCESS) {

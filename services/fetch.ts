@@ -22,7 +22,6 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (config) => {
     const authToken = config.data.token;
-    console.log(config)
     if (authToken) {
       console.log(authToken);
       localStorage.setItem("token", authToken);

@@ -8,7 +8,7 @@ type DateTimeVal = {
 };
 
 const getDateTimeVal = (dateTimeStr: string) => {
-  const datetime = dateTimeStr.split('T');
+  const datetime = dateTimeStr.split(' ');
   const dateArray = datetime[0]?.split('-');
   const timeArray = datetime[1]?.split(':');
 
