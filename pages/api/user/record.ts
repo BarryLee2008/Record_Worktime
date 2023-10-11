@@ -29,7 +29,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         } else if(typeof decode === 'string'){
           userInfo = JSON.parse(decode)
         }
-        userInfo = decode
+        //userInfo = decode
        
         } catch (error:any) {
           res.status(401).json({

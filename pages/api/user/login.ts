@@ -34,12 +34,13 @@ const login = async (req:NextApiRequest,res:NextApiResponse) => {
         }
     })
     // console.log(user)
-    if(user){
+    if(user && user.id){
         try {
           const token =  await createJWT(user) 
           return res.status(200).json({
             message:'successfully loged in',
-            token
+            token,
+            admin:user.id<=20 ? true : false
         })
         } catch (error:any) {
             res.status(500).json({
