@@ -5,6 +5,8 @@ import Navigation from './components/Navigation/Navigation';
 import styles from '../styles/RecordPage.module.css';
 import { useRouter } from 'next/router';
 import getAuth from 'services/getAuth';
+import getUserRecords from 'services/getUserRecords';
+import { NextPage } from 'next';
 
 interface DataType {
   key: string;
@@ -43,110 +45,19 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: '1',
-    date: '2023-10-10',
-    time: '09:30 - 17:30',
-    location: 'Richmond',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '2',
-    date: '2023-10-11',
-    time: '09:30 - 17:30',
-    location: 'Downtown',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '3',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '4',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '5',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '6',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '7',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '8',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '9',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '10',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '11',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-  {
-    key: '12',
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  },
-];
-
-for (let i = 13; i < 150; ++i) {
-  data.push({
-    key: i.toString(),
-    date: '2023-10-12',
-    time: '09:30 - 17:30',
-    location: 'Burnaby',
-    workingHour: '8 Hours',
-  });
-}
-
-const RecordPage: React.FC = () => {
+const RecordPage: NextPage = () => {
   const router = useRouter();
   getAuth().catch(() => router.push('/'));
 
   const [loadingPage, setLoadingPage] = useState(true);
-  useEffect(() => setLoadingPage(false), []);
-
+  const [data, setData] = useState<DataType[]>([]);
+  useEffect(() => {
+    getUserRecords().then((records) => {
+      setData(records || []);
+      setLoadingPage(false);
+    });
+  }, []);
+  
   return (
     <div className={styles.wrapper}>
       {loadingPage && <Spin size="large" />}

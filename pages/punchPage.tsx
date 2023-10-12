@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PunchButton from './components/PunchButton';
 import TimeCard from './components/TimeCard';
 import LocationSelection from './components/LocationSelection';
-import { NextPage } from 'next';
 import styles from '../styles/PunchPage.module.css';
 import { Spin } from 'antd';
 import punchClockIn from 'services/punchClockIn';
@@ -13,6 +12,7 @@ import getAuth from 'services/getAuth';
 import getUserWorkTime from 'services/getUserWorkTime';
 import getTimeString from './utils/getTimeString';
 import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 
 const DefaultTimeString: string = '00:00:00';
 const ON_DUTY = 1;

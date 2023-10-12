@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import styles from '../styles/UpdatePasswordPage.module.css';
+import { NextPage } from 'next';
 
-const UpdatePasswordPage: React.FC = () => {
+const UpdatePasswordPage: NextPage = () => {
   const [form] = Form.useForm();
   return (
     <div className={styles.layout}>

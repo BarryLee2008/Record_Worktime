@@ -1,6 +1,8 @@
 const getTimeString = (dateTimeStr: string) => {
+  if (dateTimeStr === '') return '';
   const datetime = dateTimeStr.split(' ');
-  return datetime[1] || '';
+  const timeArr = datetime[1]?.split(':');
+  return timeArr[0] + ':' + timeArr[1];
 };
 
 export default getTimeString;

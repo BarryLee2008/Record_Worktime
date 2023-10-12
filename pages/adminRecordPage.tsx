@@ -4,6 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useRouter } from 'next/router';
 import getAuth from 'services/getAuth';
 import styles from '../styles/AdminRecordPage.module.css';
+import { NextPage } from 'next';
 
 interface DataType {
   key: string;
@@ -86,7 +87,7 @@ const data: DataType[] = [
   },
 ];
 
-const RecordPage: React.FC = () => {
+const RecordPage: NextPage = () => {
   const router = useRouter();
   getAuth().catch(() => router.push('/'));
 
