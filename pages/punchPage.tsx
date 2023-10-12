@@ -72,9 +72,10 @@ const PunchPage: NextPage = () => {
     if (dutyState === OFF_DUTY)
       punchClockIn().then((status) => changeDutyState(status));
     else if (dutyState === ON_DUTY)
-      punchClockOut({ taskID, location }).then((status) =>
-        changeDutyState(status)
-      );
+      punchClockOut({ taskID, location }).then((status) => {
+        changeDutyState(status);
+        if (status === SUCCESS) localStorage.removeItem('taskID');
+      });
 
     setTimeout(() => setClockEnable(true), CLOCK_BLOCK_TIME);
   };

@@ -17,4 +17,6 @@
 
 .button {
   min-height: 3rem;
+  width: 5rem;
+  margin-right: 2rem;
 }

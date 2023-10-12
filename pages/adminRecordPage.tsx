@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Space, Spin, Table, Tag } from 'antd';
+import { Button, Select, Spin, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useRouter } from 'next/router';
 import getAuth from 'services/getAuth';
@@ -19,16 +19,24 @@ interface DataType {
 const RecordPage: NextPage = () => {
   const router = useRouter();
   getAuth().catch(() => router.push('/'));
+  const date = new Date()
 
   const [loadingPage, setLoadingPage] = useState(true);
   const [data, setData] = useState<DataType[]>([]);
-  const employeeName = localStorage.getItem('employeeName');
+  const [month, setMonth] = useState(date.getMonth());
+  const [employeeName, setEmployeeName] = useState('');
+
   useEffect(() => {
+    setEmployeeName(localStorage.getItem('employeeName') || '');
     getSingleUserRecord(localStorage.getItem('employeeID') || '3').then((records) => {
       setData(records || []);
       setLoadingPage(false);
     })
   }, []);
+
+  const handleMonthChange = (value: string) => {
+    setMonth(Number.parseInt(value));
+  }
 
   const columns: ColumnsType<DataType> = [
     {
@@ -49,7 +57,7 @@ const RecordPage: NextPage = () => {
       key: 'time',
     },
     {
-      title: 'Location',
+      title: 'Last Location',
       dataIndex: 'location',
       key: 'location',
       render: (location) => (
@@ -63,24 +71,47 @@ const RecordPage: NextPage = () => {
       dataIndex: 'workingHour',
       key: 'workingHour',
     },
-    {
-      title: 'Action',
-      key: 'action',
-      render: () => (
-        <Space className={styles.actionSpace} size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
+    // {
+    //   title: 'Action',
+    //   key: 'action',
+    //   render: () => (
+    //     <Space className={styles.actionSpace} size="middle">
+    //       <a>Edit</a>
+    //       <a>Delete</a>
+    //     </Space>
+    //   ),
+    // },
   ];
+
+  const MONTHES = [
+    { value: '1', label: 'January' },
+    { value: '2', label: 'Febuary' },
+    { value: '3', label: 'March' },
+    { value: '4', label: 'April' },
+    { value: '5', label: 'May' },
+    { value: '6', label: 'June' },
+    { value: '7', label: 'July' },
+    { value: '8', label: 'Augest' },
+    { value: '9', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' },
+  ]
 
   return (
     <div className={styles.wrapper}>
       {loadingPage && <Spin size="large" />}
       {loadingPage || (
         <div className={styles.layout}>
-          <Button type='primary' className={styles.button} onClick={() => router.push('/adminManagePage')}>Back</Button>
+          <div>
+            <Button type='primary' className={styles.button} onClick={() => router.push('/adminManagePage')}>Back</Button>
+            <Select 
+              defaultValue={MONTHES[month]?.label}
+              style={{ width: 120 }}
+              onChange={handleMonthChange}
+              options={MONTHES}/>
+          </div>
+          
           <Table columns={columns} dataSource={data} />
         </div>
       )}

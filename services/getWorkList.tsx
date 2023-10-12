@@ -15,7 +15,6 @@ const getWorkList = async () =>
           name: name,
         });
       });
-      console.log(records);
       return records;
     })
     .catch((err) => console.log(err));
