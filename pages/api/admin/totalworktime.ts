@@ -27,8 +27,8 @@ const totalWorktime = async (req: NextApiRequest, res: NextApiResponse) => {
   } else if (typeof decode === 'string') {
     userInfo = JSON.parse(decode)?.data;
   }
-  const userID = userInfo?.id;
-  if (userID != 3 && userID != 4) {
+  const userID = Number(userInfo?.id) ;
+  if (userID > 20) {
     return res.status(403).json({
       message: 'You are not allowed to access these resources',
     });
