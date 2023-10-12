@@ -37,6 +37,7 @@ const PunchPage: NextPage = () => {
           getUserWorkTime()
             .then((data) => {
               if (data?.status === ON_DUTY) {
+                localStorage.setItem('taskID', data?.taskID);
                 setDutyState(ON_DUTY);
                 setClockInTime(getTimeString(data.start_time));
                 setLocationEnalbe(true);
