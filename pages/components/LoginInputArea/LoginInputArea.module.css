@@ -23,3 +23,8 @@
   height: 3rem;
   background-color: #0000ff;
 }
+.anchor {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}

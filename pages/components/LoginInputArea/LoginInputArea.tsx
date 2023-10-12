@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import styles from "./LoginInputArea.module.css";
+import { useRouter } from "next/router";
 
 type FieldType = {
   email?: string;
@@ -8,7 +9,7 @@ type FieldType = {
 };
 
 const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}> = ({onLogin, disable}) => {
-  
+  const router = useRouter();
   const onFinish = (values: FieldType) => {
     onLogin(values);
   };
@@ -16,6 +17,10 @@ const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
+  const onClickChangePassword = () =>{
+    router.push('/updatePasswordPage');
+  }
 
   return (
     <Form
@@ -41,10 +46,11 @@ const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}
         <Input.Password />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 2, span: 1 }}>
+      <Form.Item className={styles.buttonGroup} wrapperCol={{ offset: 2, span: 1 }}>
         <Button className={styles.button} type="primary" htmlType="submit">
           Login
         </Button>
+        <div className={styles.anchor} onClick={onClickChangePassword}>Change Your Password</div>
       </Form.Item>
     </Form>
   );

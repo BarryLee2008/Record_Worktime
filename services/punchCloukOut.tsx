@@ -2,6 +2,7 @@ import fetch from './fetch';
 
 type ClockOutReq = {
   taskID: number,
+  location: string,
 };
 
 const punchClockOut = async (body: ClockOutReq) =>

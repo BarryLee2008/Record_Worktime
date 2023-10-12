@@ -10,7 +10,8 @@ import { encryption } from 'util/md5';
 
 const userInfoChange = async (req: NextApiRequest, res: NextApiResponse) => {
   let token: string | undefined = req.headers.authorization;
-  let {newPassword = undefined} = req.body 
+  let {newPassword = undefined} = req.body
+  console.log(req.body); 
   if (!token) {
     return res.status(401).json({
       message: 'The Token Missed',
