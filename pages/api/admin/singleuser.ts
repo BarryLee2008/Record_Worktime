@@ -20,9 +20,9 @@ const singleUserInfo = async (req:NextApiRequest, res:NextApiResponse) => {
     try {
         const decode = await verifyJWT(token)
         if(typeof decode === 'object'){
-            adminID = decode?.data?.id
+            adminID = Number(decode?.data?.id)
         } else if(typeof decode === 'string'){
-            adminID = JSON.parse(decode)?.data?.id
+            adminID = Number(JSON.parse(decode)?.data?.id)
         }
     } catch (error:any) {
         return res.status(401).json({
@@ -30,8 +30,12 @@ const singleUserInfo = async (req:NextApiRequest, res:NextApiResponse) => {
         })
             
     }
-
-    if(adminID != 3 && adminID != 4 ){
+    if(!adminID){
+        return res.status(401).json({
+            message:'id is null'
+        })
+    }
+    if(adminID && adminID> 20){
         return res.status(403).json({
             message:'You do not have the access to these resources'
         })
