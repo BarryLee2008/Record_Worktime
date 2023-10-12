@@ -14,3 +14,7 @@
 .actionSpace a {
   color: rgb(68, 71, 241);
 }
+
+.button {
+  min-height: 3rem;
+}

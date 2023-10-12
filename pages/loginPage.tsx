@@ -11,7 +11,7 @@ type LoginCredential = {
 };
 
 const PUNCH_PAGE = '/punchPage';
-const ADMIN_PAGE = '/adminRecordPage';
+const ADMIN_PAGE = '/adminManagePage';
 
 const LoginPage: React.FC = () => {
   const [logFailed, setLogFailed] = useState(false);
