@@ -55,17 +55,12 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   
   const userID =  Number.parseInt(userInfo?.data?.id)
   //console.log(typeof userID)
- // console.log(userID)
+  //console.log(userID)
   const userRepo = AppDataSource.getRepository(User)
   const taskRepo = AppDataSource.getRepository(Task)
 
   if (method === 'POST') {
-    let {location = null} = req.body
-    if(!location){
-    return res.status(401).json({
-      message:'Location Infomation Missed'
-    })
-  }
+    
     //let newTask = new Task()
    const currentUser = await userRepo.findOne({
     where:{
@@ -93,7 +88,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
    newTask.timer_id = 0
    newTask.total_worktime = 0.0
    newTask.user.status = 1
-   newTask.location = location
+   newTask.location = ''
    try {
     let response = await taskRepo.manager.save(newTask)
     res.status(200).json({
@@ -114,7 +109,15 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   
   } else if (method === 'PUT') {
 
-    const {taskID = null} = req.body
+    let {taskID = null, location = null} = req.body
+    taskID = Number(taskID)
+    //console.log(taskID)
+    //console.log(typeof taskID)
+    if(!location){
+    return res.status(401).json({
+      message:'Location Infomation Missed'
+    })
+  }
 
     if(!taskID){
       return res.status(401).json({
