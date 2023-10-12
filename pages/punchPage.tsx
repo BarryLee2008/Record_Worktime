@@ -25,7 +25,7 @@ const PunchPage: NextPage = () => {
   const [waitting, setWaitting] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [clockInTime, setClockInTime] = useState(DefaultTimeString);
-  const [locationEable, setLocationEnalbe] = useState(true);
+  const [locationEable, setLocationEnalbe] = useState(false);
   const [location, setLocation] = useState(locationOptions[0].value);
   const [clockEnable, setClockEnable] = useState(true);
   const router = useRouter();
@@ -39,7 +39,7 @@ const PunchPage: NextPage = () => {
               if (data?.status === ON_DUTY) {
                 setDutyState(ON_DUTY);
                 setClockInTime(getTimeString(data.start_time));
-                setLocationEnalbe(false);
+                setLocationEnalbe(true);
               } else setClockInTime(DefaultTimeString);
             })
             .then(() => setPageLoading(false));
@@ -54,10 +54,10 @@ const PunchPage: NextPage = () => {
     }
 
     if (dutyState === ON_DUTY) {
-      setLocationEnalbe(true);
+      setLocationEnalbe(false);
       setDutyState(OFF_DUTY);
     } else {
-      setLocationEnalbe(false);
+      setLocationEnalbe(true);
       setDutyState(ON_DUTY);
     }
     setWaitting(false);
@@ -69,9 +69,11 @@ const PunchPage: NextPage = () => {
     const taskID = Number.parseInt(String(localStorage.getItem('taskID')));
 
     if (dutyState === OFF_DUTY)
-      punchClockIn({ location }).then((status) => changeDutyState(status));
+      punchClockIn().then((status) => changeDutyState(status));
     else if (dutyState === ON_DUTY)
-      punchClockOut({ taskID }).then((status) => changeDutyState(status));
+      punchClockOut({ taskID, location }).then((status) =>
+        changeDutyState(status)
+      );
 
     setTimeout(() => setClockEnable(true), CLOCK_BLOCK_TIME);
   };
