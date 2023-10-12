@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Spin, Table, Tag } from 'antd';
+import { Space, Spin, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import Navigation from './components/Navigation/Navigation';
-import styles from '../styles/RecordPage.module.css';
 import { useRouter } from 'next/router';
 import getAuth from 'services/getAuth';
-import getUserRecords from 'services/getUserRecords';
+import styles from '../styles/AdminRecordPage.module.css';
 import { NextPage } from 'next';
 
 interface DataType {
   key: string;
+  name: string;
   date: string;
   time: string;
   location: string;
@@ -18,10 +17,16 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (text) => text,
+  },
+  {
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
-    render: (text) => <a>{text}</a>,
+    render: (text) => text,
   },
   {
     title: 'Time',
@@ -43,6 +48,43 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'workingHour',
     key: 'workingHour',
   },
+  {
+    title: 'Action',
+    key: 'action',
+    render: () => (
+      <Space className={styles.actionSpace} size="middle">
+        <a>Edit</a>
+        <a>Delete</a>
+      </Space>
+    ),
+  },
+];
+
+const data: DataType[] = [
+  {
+    key: '1',
+    name: 'Tom',
+    date: '2023-10-10',
+    time: '09:30 - 17:30',
+    location: 'Richmond',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '2',
+    name: 'Jerry',
+    date: '2023-10-11',
+    time: '09:30 - 17:30',
+    location: 'Downtown',
+    workingHour: '8 Hours',
+  },
+  {
+    key: '3',
+    name: 'Lee',
+    date: '2023-10-12',
+    time: '09:30 - 17:30',
+    location: 'Burnaby',
+    workingHour: '8 Hours',
+  },
 ];
 
 const RecordPage: NextPage = () => {
@@ -50,27 +92,14 @@ const RecordPage: NextPage = () => {
   getAuth().catch(() => router.push('/'));
 
   const [loadingPage, setLoadingPage] = useState(true);
-  const [data, setData] = useState<DataType[]>([]);
-  useEffect(() => {
-    getUserRecords().then((records) => {
-      setData(records || []);
-      setLoadingPage(false);
-    });
-  }, []);
-  
+  useEffect(() => setLoadingPage(false), []);
+
   return (
     <div className={styles.wrapper}>
       {loadingPage && <Spin size="large" />}
       {loadingPage || (
         <div className={styles.layout}>
-          <Navigation />
-          <Table
-            className={styles.tableArea}
-            columns={columns}
-            dataSource={data}
-            pagination={{ pageSize: 10 }}
-            scroll={{ y: '70vh' }}
-          />
+          <Table columns={columns} dataSource={data} />
         </div>
       )}
     </div>
