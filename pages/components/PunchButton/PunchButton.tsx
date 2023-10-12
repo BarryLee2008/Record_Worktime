@@ -1,32 +1,41 @@
 import React, { useState } from "react";
 import styles from "./PunchButton.module.css";
 import getCurrentTimeString from "../../utils/getCurrentTimeString";
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const SECOND = 1000;
+const INIT_CLOCK = '00:00:00';
 
 const PunchButton: React.FC<{ enable: boolean, callback: Function }> = ({
   enable,
   callback,
 }) => {
   const onClick = () => {
-    console.log('Punch Clock');
-    callback();
+    modal.confirm({
+      title: 'Confirm',
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      okText: 'Confirm',
+      cancelText: 'Cancel',
+      onOk: () => callback(),
+    });
   };
 
-  const [currentTime, setCurrentTime] = useState('00:00:00');
+  const [currentTime, setCurrentTime] = useState(INIT_CLOCK);
+  const [modal, contextHolder] = Modal.useModal();
 
   setInterval(() => {
     const currentTimeString = getCurrentTimeString();
     setCurrentTime(currentTimeString);
-  }, 1000);
+  }, SECOND);
 
   return (
     <div className={styles.layout}>
-      <input
-        type="button"
-        className={styles.button}
-        onClick={onClick}
-        value={currentTime}
-        disabled={!enable}
-      />
+      <button className={styles.button} onClick={onClick} disabled={!enable}>
+        {currentTime}
+      </button>
+      {contextHolder}
     </div>
   );
 };

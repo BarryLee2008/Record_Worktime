@@ -7,10 +7,7 @@ type ClockOutReq = {
 const punchClockOut = async (body: ClockOutReq) =>
   fetch
     .put('/api/user/record', body)
-    .then((res) => {
-      console.log(res);
-      return res.status;
-    })
+    .then((res) => res.status)
     .catch((err) => console.log(err));
 
 export default punchClockOut;

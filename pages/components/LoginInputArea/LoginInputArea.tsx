@@ -10,7 +10,6 @@ type FieldType = {
 const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}> = ({onLogin, disable}) => {
   
   const onFinish = (values: FieldType) => {
-    console.log("Success:", values);
     onLogin(values);
   };
 
