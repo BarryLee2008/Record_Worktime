@@ -5,11 +5,11 @@ import {verifyJWT} from 'util/jwt'
 import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
 
-const LOCAL_TIME_STR = new Date().toLocaleString('en-US', {timeZone: 'America/Vancouver'});
 const record = async (req: NextApiRequest, res: NextApiResponse) => {
   // post start work
   /* const date = new Date();
   console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'})); */
+  const LOCAL_TIME_STR = new Date().toLocaleString('en-US', {timeZone: 'America/Vancouver'});
 
   // put end work
   
@@ -85,7 +85,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:'Before start new work, you shoud finish the work on your hand'
     })
    }
-  
+   
    let newTask = new Task()
    newTask.user = currentUser
    newTask.start_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
