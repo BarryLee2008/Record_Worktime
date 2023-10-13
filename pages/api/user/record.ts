@@ -172,7 +172,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'The current user operating the system is not authorizd'
       })
     }
-    currentTask!.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    currentTask!.end_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
     console.log(new Date())
     currentTask.user!.status = 0
     if(currentTask?.start_time){
