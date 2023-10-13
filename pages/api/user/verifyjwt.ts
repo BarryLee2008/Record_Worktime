@@ -6,7 +6,7 @@ import {verifyJWT} from 'util/jwt'
 const verifyjwt = async (req:NextApiRequest,res:NextApiResponse) => {
     
     const {token} = req.body
-    console.log(token)
+    //console.log(token)
     try {
         await verifyJWT(token)
         res.status(200).json({
