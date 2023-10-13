@@ -4,6 +4,8 @@ import {User, Task} from 'db/entities/index'
 import {verifyJWT} from 'util/jwt'
 import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
+
+const LOCAL_TIME_STR = new Date().toLocaleString('en-US', {timeZone: 'America/Vancouver'});
 const record = async (req: NextApiRequest, res: NextApiResponse) => {
   // post start work
   /* const date = new Date();
@@ -86,8 +88,8 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   
    let newTask = new Task()
    newTask.user = currentUser
-   newTask.start_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
-   newTask.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+   newTask.start_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
+   newTask.end_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
    newTask.timer_id = 0
    newTask.total_worktime = 0.0
    newTask.user.status = 1
@@ -170,7 +172,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'The current user operating the system is not authorizd'
       })
     }
-    currentTask!.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    currentTask!.end_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
     console.log(new Date())
     currentTask.user!.status = 0
     if(currentTask?.start_time){
