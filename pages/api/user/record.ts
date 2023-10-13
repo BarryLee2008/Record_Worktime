@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import AppDataSource from 'db/data-source'
-import {Task,User} from 'db/entities/index'
+import {User, Task} from 'db/entities/index'
 import {verifyJWT} from 'util/jwt'
 import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
