@@ -38,10 +38,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       
   }
-  res.status(200).json({
-    message:'Success',
-    data:req.headers.authorization
-  })
+  
   try {
     if(!AppDataSource.isInitialized)
     await AppDataSource.initialize()
@@ -50,7 +47,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:error?.message || 'Failed to initialize the AppDataSource'
     })
   }
-  
+  res.status(200).json({
+    message:'我在app下面',
+    data:req.headers.authorization
+  })
  //console.log(userInfo)
 
   const method = req.method;
