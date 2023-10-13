@@ -61,10 +61,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   
 
   if (method === 'POST') {
-    res.status(200).json({
-      message:'我在post里了',
-      data:userID
-    })
+   
     //let newTask = new Task()
    const currentUser = await userRepo.findOne({
     where:{
@@ -74,6 +71,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       tasks:true
     }
    })
+   res.status(200).json({
+    message:'我在post里了',
+    data:currentUser
+  })
 
    if(!currentUser){
     return res.status(403).json({
