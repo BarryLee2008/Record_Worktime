@@ -5,7 +5,13 @@ import {createJWT} from 'util/jwt'
 import {encryption} from 'util/md5'
 
 const login = async (req:NextApiRequest,res:NextApiResponse) => {
+   if(process.env.NODE_ENV === 'production')
+    return res.status(200).json({
+        message:'ok',
+        admin:false,
+        token:''
 
+    })
     const {email = null, password = null} = req.body
 
     if(!email || !password ){

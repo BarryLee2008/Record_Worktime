@@ -168,6 +168,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
     currentTask!.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    console.log(new Date())
     currentTask.user!.status = 0
     if(currentTask?.start_time){
       let total_worktime_string = formatDistance(new Date(currentTask.start_time),new Date(currentTask.end_time))
