@@ -20,7 +20,7 @@ const RecordPage: NextPage = () => {
 
   const [loadingPage, setLoadingPage] = useState(true);
   const [data, setData] = useState<DataType[]>([]);
-  const [month, setMonth] = useState(date.getMonth());
+  const [month, setMonth] = useState(date.getMonth() + 1);
   const [employeeName, setEmployeeName] = useState('');
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const RecordPage: NextPage = () => {
           <div>
             <Button type='primary' className={styles.button} onClick={() => window.location.href = '/adminManagePage'}>Back</Button>
             <Select 
-              defaultValue={MONTHES[month]?.label}
+              defaultValue={MONTHES[month - 1]?.label}
               style={{ width: 120 }}
               onChange={handleMonthChange}
               options={MONTHES}/>
