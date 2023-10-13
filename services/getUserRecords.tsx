@@ -28,7 +28,6 @@ const getUserRecords = async () =>
           });
         }
       );
-      console.log(records);
       return records;
     })
     .catch((err) => console.log(err));

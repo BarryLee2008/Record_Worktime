@@ -30,8 +30,6 @@ const getSingleUserRecord = async (userID: string) =>
           });
         }
       );
-
-      console.log(records);
       return records;
     })
     .catch((err) => console.log(err));
