@@ -83,10 +83,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:'Before start new work, you shoud finish the work on your hand'
     })
    }
-   res.status(200).json({
-    message:'我在post里了',
-    data:currentUser.status
-  })
+  
    let newTask = new Task()
    newTask.user = currentUser
    newTask.start_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
@@ -97,6 +94,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
    newTask.location = ''
    try {
     let response = await taskRepo.manager.save(newTask)
+    res.status(200).json({
+      message:'我在post里了',
+      data:response
+    })
     res.status(200).json({
       message: 'time to work',
       data:{
