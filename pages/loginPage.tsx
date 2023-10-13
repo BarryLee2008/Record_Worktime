@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from '../styles/LoginPage.module.css';
 import LoginInputArea from './components/LoginInputArea';
 import login from '../services/login';
-import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 
 type LoginCredential = {
@@ -18,14 +17,14 @@ const LoginPage: React.FC = () => {
   const [onLoading, setOnLoading] = useState(false);
   const ERROR_MESSAGE = 'Login Failed, Please check your email and password';
 
-  const router = useRouter();
+  const autoRoute = (res: any) =>
+    (window.location.href = res?.data?.admin ? ADMIN_PAGE : PUNCH_PAGE);
 
   const userLogin = (credentials: LoginCredential) => {
     setLogFailed(false);
     setOnLoading(true);
     login(credentials).then((res) => {
-      if (res?.status === 200)
-        router.push(res?.data?.admin ? ADMIN_PAGE : PUNCH_PAGE);
+      if (res?.status === 200) autoRoute(res);
       else {
         setLogFailed(true);
         setOnLoading(false);

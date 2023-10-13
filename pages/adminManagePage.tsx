@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { List, Spin } from 'antd';
 import getAuth from 'services/getAuth';
-import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import getWorkList from 'services/getWorkList';
 import styles from 'styles/AdminManagePage.module.css';
@@ -12,22 +11,23 @@ interface DataType {
 }
 
 const AdminManagePage: NextPage = () => {
-  const router = useRouter();
-  getAuth().catch(() => router.push('/'));
   const [loadingPage, setLoadingPage] = useState(true);
   const [data, setData] = useState<DataType[]>([]);
 
   useEffect(() => {
+    getAuth().catch(() => window.location.href='/');
     getWorkList().then((records) => {
       setData(records || []);
       setLoadingPage(false);
     })
   }, []);
 
+  const routeToAdminRecordPage = () => window.location.href='/adminRecordPage';
+
   const onEmployeeClick = (employee: DataType) =>{
     localStorage.setItem('employeeID', employee.id);
-    localStorage.setItem('employeeName', employee.name)
-    router.push('/adminRecordPage');
+    localStorage.setItem('employeeName', employee.name);
+    routeToAdminRecordPage();
   }
 
   return (

@@ -1,10 +1,15 @@
 import fetch from './fetch';
-import getDateString from 'pages/utils/getDateString';
-import getTimeString from 'pages/utils/getTimeString';
+import getDateString from 'utils/getDateString';
+import getTimeString from 'utils/getTimeString';
 
-const getSingleUserRecord = async (userID: string) =>
+type SingleUserProps = {
+  userID: string,
+  month: number,
+};
+
+const getSingleUserRecord = async (body: SingleUserProps) =>
   fetch
-    .post('/api/admin/singleuser', { userID })
+    .post('/api/admin/singleuser', body)
     .then((res) => {
       //const tasks = res.data.data.tasks;
       //const name = res.data.fullname;
