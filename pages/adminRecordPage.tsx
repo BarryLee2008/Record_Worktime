@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Select, Spin, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useRouter } from 'next/router';
 import getAuth from 'services/getAuth';
 import styles from '../styles/AdminRecordPage.module.css';
 import { NextPage } from 'next';
@@ -17,8 +16,6 @@ interface DataType {
 }
 
 const RecordPage: NextPage = () => {
-  const router = useRouter();
-  getAuth().catch(() => router.push('/'));
   const date = new Date()
 
   const [loadingPage, setLoadingPage] = useState(true);
@@ -27,12 +24,13 @@ const RecordPage: NextPage = () => {
   const [employeeName, setEmployeeName] = useState('');
 
   useEffect(() => {
+    getAuth().catch(() => window.location.href='/');
     setEmployeeName(localStorage.getItem('employeeName') || '');
-    getSingleUserRecord(localStorage.getItem('employeeID') || '3').then((records) => {
+    getSingleUserRecord({userID: localStorage.getItem('employeeID') || '3', month}).then((records) => {
       setData(records || []);
       setLoadingPage(false);
     })
-  }, []);
+  }, [month]);
 
   const handleMonthChange = (value: string) => {
     setMonth(Number.parseInt(value));
@@ -104,7 +102,7 @@ const RecordPage: NextPage = () => {
       {loadingPage || (
         <div className={styles.layout}>
           <div>
-            <Button type='primary' className={styles.button} onClick={() => router.push('/adminManagePage')}>Back</Button>
+            <Button type='primary' className={styles.button} onClick={() => window.location.href = '/adminManagePage'}>Back</Button>
             <Select 
               defaultValue={MONTHES[month]?.label}
               style={{ width: 120 }}

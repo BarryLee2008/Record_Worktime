@@ -1,6 +1,6 @@
 import fetch from './fetch';
-import getDateString from 'pages/utils/getDateString';
-import getTimeString from 'pages/utils/getTimeString';
+import getDateString from 'utils/getDateString';
+import getTimeString from 'utils/getTimeString';
 
 const getUserRecords = async () =>
   fetch

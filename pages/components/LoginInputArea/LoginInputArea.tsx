@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import styles from "./LoginInputArea.module.css";
-import { useRouter } from "next/router";
 
 type FieldType = {
   email?: string;
@@ -9,7 +8,6 @@ type FieldType = {
 };
 
 const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}> = ({onLogin, disable}) => {
-  const router = useRouter();
   const onFinish = (values: FieldType) => {
     onLogin(values);
   };
@@ -19,7 +17,7 @@ const LoginInputArea: React.FC<{onLogin: Function, disable: boolean | undefined}
   };
 
   const onClickChangePassword = () =>{
-    router.push('/updatePasswordPage');
+    window.location.href = '/updatePasswordPage';
   }
 
   return (

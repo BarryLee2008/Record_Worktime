@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Spin } from 'antd';
 import styles from '../styles/UpdatePasswordPage.module.css';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import login from 'services/login';
 import updatePassword from 'services/updatePassword';
 
@@ -17,10 +16,11 @@ const UpdatePasswordPage: NextPage = () => {
     new_password: string,
   };
 
-  const router = useRouter();
   const [form] = Form.useForm();
   const [errorMessage, setErrorMessage] = useState('');
   const [waitting, setWaitting] = useState(false);
+
+  const routeToLogin = () => (window.location.href = '/');
 
   const onFinish = (value: FieldType) => {
     setWaitting(true);
@@ -30,7 +30,7 @@ const UpdatePasswordPage: NextPage = () => {
         updatePassword({ newPassword: value.new_password }).then((res) => {
           if (res?.status === SUCCESS) {
             localStorage.removeItem('token');
-            router.push('/');
+            routeToLogin();
           } else {
             setErrorMessage(UPDATE_ERROR_MESSAGE);
             setWaitting(false);
@@ -101,7 +101,10 @@ const UpdatePasswordPage: NextPage = () => {
             <Button className={styles.button} type="primary" htmlType="submit">
               Confirm
             </Button>
-            <Button className={styles.button} onClick={() => router.push('/')}>
+            <Button
+              className={styles.button}
+              onClick={() => (window.location.href = '/')}
+            >
               Cancel
             </Button>
           </div>

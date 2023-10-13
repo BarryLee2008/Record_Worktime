@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./PunchButton.module.css";
-import getCurrentTimeString from "../../utils/getCurrentTimeString";
+import getCurrentTimeString from 'utils/getCurrentTimeString';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
