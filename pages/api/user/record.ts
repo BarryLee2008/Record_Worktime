@@ -92,14 +92,11 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
    newTask.total_worktime = 0.0
    newTask.user.status = 1
    newTask.location = ''
-   currentUser.tasks?.push(newTask)
+   //currentUser.tasks?.push(newTask)
    try {
     let response = await taskRepo.manager.save(newTask)
-    let userResponse = await taskRepo.manager.save(currentUser)
-    res.status(200).json({
-      message:'我在post里了',
-      data:userResponse
-    })
+    //let userResponse = await taskRepo.manager.save(currentUser)
+   
     res.status(200).json({
       message: 'time to work',
       data:{

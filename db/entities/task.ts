@@ -20,7 +20,9 @@ export class Task{
     @Column()
     timer_id?:number
 
-    @ManyToOne('User','(user)=>user.tasks')
+    @ManyToOne(()=>User, (user)=>user.tasks,{
+        cascade:true
+    })
     @JoinColumn({name:'user_id'})
     user?:User
 }
