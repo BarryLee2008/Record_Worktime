@@ -58,13 +58,13 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   //console.log(userID)
   const userRepo = AppDataSource.getRepository(User)
   const taskRepo = AppDataSource.getRepository(Task)
-  res.status(200).json({
-    message:'我在repo下面',
-    data:userID
-  })
+  
 
   if (method === 'POST') {
-    
+    res.status(200).json({
+      message:'我在post里了',
+      data:userID
+    })
     //let newTask = new Task()
    const currentUser = await userRepo.findOne({
     where:{
