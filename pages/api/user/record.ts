@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import AppDataSource from 'db/data-source'
-import {Task,User} from 'db/entities/index'
+import {User, Task} from 'db/entities/index'
 import {verifyJWT} from 'util/jwt'
 import formatDistance from 'date-fns/formatDistance'
 import format from 'date-fns/format'
@@ -12,7 +12,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'})); */
 
   // put end work
-
+  
   let token:string | undefined  = req.headers.authorization
   
   let userInfo = null
@@ -40,7 +40,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       
   }
-
+  
   try {
     if(!AppDataSource.isInitialized)
     await AppDataSource.initialize()
@@ -49,7 +49,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:error?.message || 'Failed to initialize the AppDataSource'
     })
   }
-  
+ 
  //console.log(userInfo)
 
   const method = req.method;
@@ -60,9 +60,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   //console.log(userID)
   const userRepo = AppDataSource.getRepository(User)
   const taskRepo = AppDataSource.getRepository(Task)
+  
 
   if (method === 'POST') {
-    
+   
     //let newTask = new Task()
    const currentUser = await userRepo.findOne({
     where:{
@@ -72,6 +73,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       tasks:true
     }
    })
+  
 
    if(!currentUser){
     return res.status(403).json({
@@ -83,7 +85,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:'Before start new work, you shoud finish the work on your hand'
     })
    }
-
+  
    let newTask = new Task()
    newTask.user = currentUser
    newTask.start_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
@@ -92,8 +94,11 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
    newTask.total_worktime = 0.0
    newTask.user.status = 1
    newTask.location = ''
+   //currentUser.tasks?.push(newTask)
    try {
     let response = await taskRepo.manager.save(newTask)
+    //let userResponse = await taskRepo.manager.save(currentUser)
+   
     res.status(200).json({
       message: 'time to work',
       data:{
@@ -167,7 +172,8 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
         message:'The current user operating the system is not authorizd'
       })
     }
-    currentTask!.end_time = format(new Date(LOCAL_TIME_STR), 'yyyy-MM-dd HH:mm:ss')
+    currentTask!.end_time = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    console.log(new Date())
     currentTask.user!.status = 0
     if(currentTask?.start_time){
       let total_worktime_string = formatDistance(new Date(currentTask.start_time),new Date(currentTask.end_time))

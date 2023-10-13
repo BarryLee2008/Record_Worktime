@@ -5,7 +5,7 @@ import {createJWT} from 'util/jwt'
 import {encryption} from 'util/md5'
 
 const login = async (req:NextApiRequest,res:NextApiResponse) => {
-
+   
     const {email = null, password = null} = req.body
 
     if(!email || !password ){
