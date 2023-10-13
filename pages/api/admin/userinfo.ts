@@ -3,7 +3,8 @@ import { User } from 'db/entities';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verifyJWT } from 'util/jwt';
 //import { Between } from 'typeorm';
-import { format } from 'date-fns';
+//import { format } from 'date-fns';
+import Monthes from './Monthes';
 const getUserInfo = async (req: NextApiRequest, res: NextApiResponse) => {
   let token: string | undefined = req.headers.authorization;
   if (!token) {
@@ -44,13 +45,15 @@ const getUserInfo = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const userRepo = AppDataSource.getRepository(User);
 
-  const {period = 10} = req.body
-  const start_time = format((new Date().getTime() - 1000 * 60 * 60 * 24 * period),'yyyy-MM-dd') + ' 00:00:00'
-  const end_time = format(new Date(), 'yyyy-MM-dd') + ' 23:59:59'
-  //const start_time = '2023-10-01 00:00:00'
-  //const end_time = '2023-10-05 23:59:59'
- console.log(userID)
+  let {month = Number(new Date().getMonth()) + 1} = req.body
+  //const start_time = format((new Date().getTime() - 1000 * 60 * 60 * 24 * period),'yyyy-MM-dd') + ' 00:00:00'
+  //const end_time = format(new Date(), 'yyyy-MM-dd') + ' 23:59:59'
+  month  = month >= 10 ? month : '0' + String(month)
+  const start_time = new Date().getFullYear() + '-' +  month  + '-' + `01 00:00:00`
+  const end_time = new Date().getFullYear() + '-' +  month + '-' + `${Monthes[Number(month - 1)]} 23:59:59` 
+  //console.log(userID)
   console.log(start_time)
+  console.log(end_time)
 /*   const targetedUser = await userRepo.findOne({
     relations:{
       tasks:true

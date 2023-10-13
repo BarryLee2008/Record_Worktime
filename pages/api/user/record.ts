@@ -180,6 +180,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
      // console.log(currentTask)
+     currentTask.location = location
      const response =  await taskRepo.manager.save(currentTask)
      // console.log(response.timer_id)
      clearTimeout(response.timer_id)

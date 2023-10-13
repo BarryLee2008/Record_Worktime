@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import AppDataSource from 'db/data-source';
 import { User } from 'db/entities/index';
-import { Between } from 'typeorm';
-import { format } from 'date-fns';
+//import { Between } from 'typeorm';
+//import { format } from 'date-fns';
+import { MoreThan } from "typeorm"
 import { verifyJWT } from 'util/jwt';
+//import Monthes from './Monthes';
 const totalWorktime = async (req: NextApiRequest, res: NextApiResponse) => {
   let token: string | undefined = req.headers.authorization;
   if (!token) {
@@ -34,28 +36,27 @@ const totalWorktime = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const { period = 10 } = req.body;
+  //const { period = 10 } = req.body;
   if (!AppDataSource.isInitialized) {
     await AppDataSource.initialize();
   }
   const userRepo = AppDataSource.getRepository(User);
-  let end_time = format(new Date(), 'yy-MM-dd');
-  let start_time = format(
+  
+  //let end_time = format(new Date(), 'yy-MM-dd');
+ 
+ /*  let start_time = format(
     new Date().getTime() - 1000 * 60 * 60 * 24 * period,
     'yyyy-MM-dd'
+  ); */
+  //console.log(`${start_time} 00:00:00`);
+  const allUsers = await userRepo.find(
+    {
+      where:{
+        id:MoreThan(21)
+      }
+    }
   );
-  console.log(`${start_time} 00:00:00`);
-  const allUsers = await userRepo.find({
-    relations: {
-      tasks: true,
-    },
-    where: {
-      tasks: {
-        start_time: Between(`${start_time} 00:00:00`, `${end_time} 23:59:59`),
-      },
-    },
-  });
-  console.log(allUsers);
+  //console.log(allUsers);
 
   res.status(200).json({
     message: 'Ok',
