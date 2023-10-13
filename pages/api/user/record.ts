@@ -47,10 +47,7 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
       message:error?.message || 'Failed to initialize the AppDataSource'
     })
   }
-  res.status(200).json({
-    message:'我在app下面',
-    data:req.headers.authorization
-  })
+ 
  //console.log(userInfo)
 
   const method = req.method;
@@ -61,6 +58,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   //console.log(userID)
   const userRepo = AppDataSource.getRepository(User)
   const taskRepo = AppDataSource.getRepository(Task)
+  res.status(200).json({
+    message:'我在repo下面',
+    data:userID
+  })
 
   if (method === 'POST') {
     
