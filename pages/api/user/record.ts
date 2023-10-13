@@ -10,7 +10,10 @@ const record = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(date.toLocaleString('en-US', {timeZone: 'America/New_York'})); */
 
   // put end work
-
+  res.status(200).json({
+    message:'Success',
+    data:req.headers.authorization
+  })
   let token:string | undefined  = req.headers.authorization
   
   let userInfo = null
